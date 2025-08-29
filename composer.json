@@ -1,0 +1,26 @@
+{
+    "name": "web-mavens/auto-google-recaptcha",
+    "description": "Globally add Google reCAPTCHA to all the forms and validate it.",
+    "type": "library",
+    "license": "MIT",
+    "require": {
+        "php": ">=5.5.5",
+        "illuminate/support": "^5.0|^6.0|^7.0|^8.0|^9.0|^10.0|^11.0|^12.0",
+        "guzzlehttp/guzzle": "^6.2|^7.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "WebMavens\\AutoGoogleRecaptcha\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "WebMavens\\AutoGoogleRecaptcha\\AutoGoogleRecaptchaServiceProvider"
+            ],
+            "aliases": {
+                "AutoReCaptcha": "WebMavens\\AutoGoogleRecaptcha\\Facades\\AutoReCaptcha"
+            }
+        }
+    }
+}
