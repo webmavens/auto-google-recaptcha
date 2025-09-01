@@ -16,10 +16,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "WebMavens\\AutoGoogleRecaptcha\\AutoGoogleRecaptchaServiceProvider"
+                "WebMavens\\AutoGoogleRecaptcha\\Laravel\\AutoGoogleRecaptchaServiceProvider"
             ],
             "aliases": {
-                "AutoReCaptcha": "WebMavens\\AutoGoogleRecaptcha\\Facades\\AutoReCaptcha"
+                "AutoReCaptcha": "WebMavens\\AutoGoogleRecaptcha\\Laravel\\Facades\\AutoReCaptcha"
             }
         }
     }

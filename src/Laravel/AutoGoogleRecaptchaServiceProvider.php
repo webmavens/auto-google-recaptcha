@@ -1,9 +1,9 @@
 <?php
 
-namespace WebMavens\AutoGoogleRecaptcha;
+namespace WebMavens\AutoGoogleRecaptcha\Laravel;
 
 use Illuminate\Support\ServiceProvider;
-use WebMavens\AutoGoogleRecaptcha\Middleware\VerifyRecaptcha;
+use WebMavens\AutoGoogleRecaptcha\AutoGoogleRecaptcha;
 
 class AutoGoogleRecaptchaServiceProvider extends ServiceProvider
 {
@@ -19,7 +19,7 @@ class AutoGoogleRecaptchaServiceProvider extends ServiceProvider
 
     protected function bootConfig()
     {
-        $path = __DIR__ . '/../config/auto-google-recaptcha.php';
+        $path = __DIR__ . '/../../config/auto-google-recaptcha.php';
 
         $this->mergeConfigFrom($path, 'auto-google-recaptcha');
 
@@ -30,7 +30,7 @@ class AutoGoogleRecaptchaServiceProvider extends ServiceProvider
         // publish JS file
         if (function_exists('public_path')) {
             $this->publishes([
-                __DIR__ . '/../resources/js/auto-recaptcha.js' => public_path('vendor/auto-google-recaptcha/auto-recaptcha.js'),
+                __DIR__ . '/../../resources/js/auto-recaptcha.js' => public_path('vendor/auto-google-recaptcha/auto-recaptcha.js'),
             ], 'public');
         }
     }

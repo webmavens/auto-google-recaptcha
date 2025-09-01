@@ -1,4 +1,5 @@
 <?php
+
 namespace WebMavens\AutoGoogleRecaptcha;
 
 use GuzzleHttp\Client;
@@ -33,7 +34,7 @@ class AutoGoogleRecaptcha
 
     public function verify($response, $ip = null)
     {
-        if (!$response) {
+        if (!$response && !$this->isEnabled()) {
             return false;
         }
 
@@ -58,6 +59,10 @@ class AutoGoogleRecaptcha
 
     public function renderJs($lang = null)
     {
+        if (!$this->isEnabled()) {
+            return '<script>console.error("reCAPTCHA is disabled. Please add keys to config.");</script>';
+        }
+
         $params = [];
         $params['render'] = 'explicit';
         $params['onload'] = 'onloadCallback';
@@ -82,6 +87,29 @@ class AutoGoogleRecaptcha
 
     public function isEnabled(): bool
     {
-        return (bool) ($this->options['enable'] && !empty($this->sitekey) && !empty($this->secret));
+        return (bool) (($this->options['enable'] ?? true) && !empty($this->sitekey) && !empty($this->secret));
     }
+
+    // public function validateRequest(): void
+    // {
+    //     if ((bool) ($this->options['enable'] && !empty($this->sitekey) && !empty($this->secret))) {
+    //         $method = $_SERVER['REQUEST_METHOD'];
+    //         $uri    = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+
+    //         $requiresCaptcha = in_array($method, $this->options['allowed_methods'])
+    //                         && !in_array($uri, $this->options['excluded_routes']);
+
+    //         if ($requiresCaptcha) {
+    //             $captchaResponse = $_POST['g-recaptcha-response'] ?? null;
+
+    //             if (!$captchaResponse) {
+    //                 die("Captcha missing. Request blocked.");
+    //             }
+
+    //             if ($this->verify($captchaResponse, $_SERVER['REMOTE_ADDR'])) {
+    //                 die("Captcha failed. Request blocked.");
+    //             }
+    //         }
+    //     }
+    // }
 }

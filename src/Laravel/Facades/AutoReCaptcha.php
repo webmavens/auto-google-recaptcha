@@ -1,6 +1,6 @@
 <?php
 
-namespace WebMavens\AutoGoogleRecaptcha\Facades;
+namespace WebMavens\AutoGoogleRecaptcha\Laravel\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
