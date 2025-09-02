@@ -17,7 +17,7 @@ class VerifyRecaptcha
         if (AutoReCaptcha::isEnabled()) {
             // Verify Recaptcha for non-admin routes and form submissions for this methods
             $allowedMethod = config('auto-google-recaptcha.options.allowed_methods');
-            $excludeRoutes = config('auto-google-recaptcha.options.exclude_routes');
+            $excludeRoutes = config('auto-google-recaptcha.options.excluded_routes');
             
             if (in_array($request->method(), $allowedMethod) && 
             !Str::is($excludeRoutes, $request->route()->getName())) 

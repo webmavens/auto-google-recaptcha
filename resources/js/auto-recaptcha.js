@@ -1,5 +1,5 @@
 var onloadCallback = function() {
-    let forms = document.querySelectorAll('form:not([data-no-captcha])');
+    let forms = document.querySelectorAll('form:not([data-no-captcha]):not([method="get"])');
 
     forms.forEach((form, index) => {
         // create a container div for captcha

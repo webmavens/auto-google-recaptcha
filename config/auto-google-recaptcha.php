@@ -10,9 +10,7 @@ return [
             'PUT',
             'DELETE'
         ],
-        'exclude_routes' => [
-            'search',
-            'default_program',
+        'excluded_routes' => [
             'admin.*'
         ],
         'enable' => env('NOCAPTCHA_ENABLE', true),
