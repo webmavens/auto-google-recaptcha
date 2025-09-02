@@ -10,7 +10,7 @@ Supports **Laravel (all versions)** and **Core PHP projects**.
 Require the package via Composer:
 
 ```bash
-composer require web-mavens/auto-google-recaptcha
+composer require webmavens/auto-google-recaptcha
 ```
 
 ---
@@ -211,6 +211,6 @@ You can use this feature with `allowed_methods` config to completly exclude any 
 
 ## 📄 License
 
-MIT License © [Web Mavens](https://github.com/web-mavens)
+MIT License © [Web Mavens](https://github.com/webmavens)
 
 ---
