@@ -173,9 +173,7 @@ return [
         ],
 
         // Routes to exclude from captcha
-        'exclude_routes' => [
-            'search',
-            'default_program',
+        'excluded_routes' => [
             'admin.*' // supports wildcards
         ],
 
