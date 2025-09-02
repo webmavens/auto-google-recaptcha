@@ -93,7 +93,7 @@ This publishes:
 
 ### Environment Variables
 
-Add the following to your `.env` file:
+Get the sitekey and secret from [Google Recaptcha](https://www.google.com/u/2/recaptcha/admin/create). Add the following to your `.env` file,
 
 ```env
 NOCAPTCHA_SITEKEY=your-site-key
