@@ -1,6 +1,6 @@
 <?php
 
-$config = require __DIR__ . '/auto-google-recaptcha.php';
+$config = require __DIR__ . '/config/auto-google-recaptcha.php';
 
 $secret = $config['secret'];
 $sitekey = $config['sitekey'];
