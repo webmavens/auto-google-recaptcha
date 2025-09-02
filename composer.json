@@ -1,5 +1,5 @@
 {
-    "name": "web-mavens/auto-google-recaptcha",
+    "name": "webmavens/auto-google-recaptcha",
     "description": "Globally add Google reCAPTCHA to all the forms and validate it.",
     "type": "library",
     "license": "MIT",
