@@ -10,7 +10,7 @@ class AutoGoogleRecaptcha
 {
     const CLIENT_API = 'https://www.google.com/recaptcha/api.js';
     const VERIFY_URL = 'https://www.google.com/recaptcha/api/siteverify';
-    const LOCAL_SCRIPT_PATH = '/vendor/web-mavens/auto-google-recaptcha/resources/js/auto-recaptcha.js';
+    const LOCAL_SCRIPT_PATH = '/vendor/webmavens/auto-google-recaptcha/resources/js/auto-recaptcha.js';
 
     protected $secret;
     protected $sitekey;
@@ -32,6 +32,16 @@ class AutoGoogleRecaptcha
         $this->client = new Client(['timeout' => $options['timeout'] ?? 30]);
     }
 
+    /**
+     * Verify the given response against the reCAPTCHA service.
+     *
+     * @param string $response the response from the client
+     * @param string|null $ip the ip address of the client (optional)
+     *
+     * @return bool
+     *
+     * @throws \RuntimeException if the request to the reCAPTCHA service fails
+     */
     public function verify($response, $ip = null)
     {
         if (!$response && !$this->isEnabled()) {
@@ -57,6 +67,15 @@ class AutoGoogleRecaptcha
     }
 
 
+    /**
+     * Renders the Google reCAPTCHA script and a small script to globally
+     * inject the site key and an onload callback.
+     *
+     * @param string $lang Optional language for the reCAPTCHA widget.
+     *   If not provided, the default language is used.
+     *
+     * @return string The HTML tags for the reCAPTCHA script and its config.
+     */
     public function renderJs($lang = null)
     {
         if (!$this->isEnabled()) {
@@ -85,31 +104,13 @@ class AutoGoogleRecaptcha
         return $scriptGoogle . "\n" . $siteKeyGlobal . "\n" . $scriptPackage;
     }
 
+    /**
+     * Determine if reCAPTCHA is enabled.
+     *
+     * @return bool
+     */
     public function isEnabled(): bool
     {
         return (bool) (($this->options['enable'] ?? true) && !empty($this->sitekey) && !empty($this->secret));
     }
-
-    // public function validateRequest(): void
-    // {
-    //     if ((bool) ($this->options['enable'] && !empty($this->sitekey) && !empty($this->secret))) {
-    //         $method = $_SERVER['REQUEST_METHOD'];
-    //         $uri    = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-
-    //         $requiresCaptcha = in_array($method, $this->options['allowed_methods'])
-    //                         && !in_array($uri, $this->options['excluded_routes']);
-
-    //         if ($requiresCaptcha) {
-    //             $captchaResponse = $_POST['g-recaptcha-response'] ?? null;
-
-    //             if (!$captchaResponse) {
-    //                 die("Captcha missing. Request blocked.");
-    //             }
-
-    //             if ($this->verify($captchaResponse, $_SERVER['REMOTE_ADDR'])) {
-    //                 die("Captcha failed. Request blocked.");
-    //             }
-    //         }
-    //     }
-    // }
 }

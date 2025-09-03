@@ -89,6 +89,8 @@ This publishes:
 * Config → `config/auto-google-recaptcha.php`
 * JS → `public/vendor/auto-google-recaptcha/auto-recaptcha.js`
 
+**Note:** You can then make changes into javascript or config file based on your needs. Also you can add the javascript validation and specify when you want to load the reCAPTCHA by adding or modifying javascript.
+
 ---
 
 ### Environment Variables
@@ -173,6 +175,8 @@ return [
         ],
 
         // Routes to exclude from captcha
+        // Note: For Laravel, Add route name with wildcards (eg. post.create, post.edit, post.*) 
+        // Note: For PHP, Add url paths to exclude with wildcards (eg. /post/create, /post/edit, *post*)
         'excluded_routes' => [
             'admin.*' // supports wildcards
         ],
@@ -183,9 +187,31 @@ return [
 ];
 ```
 
-If you don't want to add the reCAPTCHA to any form in frontend then add `data-no-captcha` attribute to form tag and it will exclude that form from rendering the reCAPTCHA.
+## Other Config & Notes
 
-You can use this feature with `allowed_methods` config to completly exclude any form from reCAPTCHA validation.
+- For core PHP project replace env() function with static values if you haven't downloaded env package, else it will throw function error.
+
+- If you don't want to add the reCAPTCHA to any form in frontend then add `data-no-captcha` attribute to form tag and it will exclude that form from rendering the reCAPTCHA. You can use this feature with `allowed_methods` config to completly exclude any form from reCAPTCHA validation.
+
+- You can also add google reCAPTCHA to any form manually if needed:
+
+1. Create a div with data-size="invisible".
+
+```html
+<div class="g-recaptcha"
+    data-sitekey="_your_site_key_"
+    data-callback="onSubmit"
+    data-size="invisible">
+</div>
+```
+
+2. Call grecaptcha.execute from a javascript method.
+
+```javascript
+grecaptcha.execute();
+```
+
+Read Full Documentation for reCAPTCHA v2 [here](https://developers.google.com/recaptcha/docs/invisible) and for reCAPTCHA v3 [here](https://developers.google.com/recaptcha/docs/v3)
 
 ---
 
@@ -211,6 +237,6 @@ You can use this feature with `allowed_methods` config to completly exclude any 
 
 ## 📄 License
 
-MIT License © [Web Mavens](https://github.com/web-mavens)
+MIT License © [Web Mavens](https://github.com/webmavens)
 
 ---
