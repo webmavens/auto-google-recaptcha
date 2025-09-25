@@ -199,7 +199,7 @@ return [
 
 - This prebuilt JS also add captcha to all ajax requests.
 
-- If you don't want to add the reCAPTCHA to any ajax request in frontend then add `disabledisableCaptcha: true` attribute to ajax options and it will exclude that request from adding the reCAPTCHA. You can use this feature with `allowed_methods` config to completly exclude any ajax request from reCAPTCHA validation.
+- If you don't want to add the reCAPTCHA to any ajax request in frontend then add `disableCaptcha: true` attribute to ajax options and it will exclude that request from adding the reCAPTCHA. You can use this feature with `allowed_methods` config to completly exclude any ajax request from reCAPTCHA validation.
 
 ---
 
