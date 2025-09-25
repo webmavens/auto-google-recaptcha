@@ -193,6 +193,18 @@ return [
 
 - If you don't want to add the reCAPTCHA to any form in frontend then add `data-no-captcha` attribute to form tag and it will exclude that form from rendering the reCAPTCHA. You can use this feature with `allowed_methods` config to completly exclude any form from reCAPTCHA validation.
 
+---
+
+### Ajax Config
+
+- This prebuilt JS also add captcha to all ajax requests.
+
+- If you don't want to add the reCAPTCHA to any ajax request in frontend then add `disabledisableCaptcha: true` attribute to ajax options and it will exclude that request from adding the reCAPTCHA. You can use this feature with `allowed_methods` config to completly exclude any ajax request from reCAPTCHA validation.
+
+---
+
+### Manual reCAPTCHA
+
 - You can also add google reCAPTCHA to any form manually if needed:
 
 1. Create a div with data-size="invisible".
