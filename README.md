@@ -191,7 +191,7 @@ return [
 
 - For core PHP project replace env() function with static values if you haven't downloaded env package, else it will throw function error.
 
-- If you don't want to add the reCAPTCHA to any form in frontend then add `data-no-captcha` attribute to form tag and it will exclude that form from rendering the reCAPTCHA. You can use this feature with `allowed_methods` config to completly exclude any form from reCAPTCHA validation.
+- If you don't want to add the reCAPTCHA to any form in frontend then add `data-no-captcha` attribute to form tag and it will exclude that form from rendering the reCAPTCHA. You can use this feature with `allowed_methods` config to completely exclude any form from reCAPTCHA validation.
 
 ---
 
@@ -199,7 +199,7 @@ return [
 
 - This prebuilt JS also add captcha to all ajax requests.
 
-- If you don't want to add the reCAPTCHA to any ajax request in frontend then add `disableCaptcha: true` attribute to ajax options and it will exclude that request from adding the reCAPTCHA. You can use this feature with `allowed_methods` config to completly exclude any ajax request from reCAPTCHA validation.
+- If you don't want to add the reCAPTCHA to any ajax request in frontend then add `disableCaptcha: true` attribute to ajax options and it will exclude that request from adding the reCAPTCHA. You can use this feature with `allowed_methods` config to completely exclude any ajax request from reCAPTCHA validation.
 
 ---
 

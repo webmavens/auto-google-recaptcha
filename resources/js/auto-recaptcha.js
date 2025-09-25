@@ -47,52 +47,54 @@ var onloadCallback = function () {
         window.widgetIds[index] = widgetId;
     });
 
-    // Add invisible captcha for ajax requests
-    const ajaxDiv = document.createElement('div');
-    ajaxDiv.id = 'captcha-ajax';
-    ajaxDiv.style.display = 'none';
-    document.body.appendChild(ajaxDiv);
+    if ($.ajax) {
+        // Add invisible captcha for ajax requests
+        const ajaxDiv = document.createElement('div');
+        ajaxDiv.id = 'captcha-ajax';
+        ajaxDiv.style.display = 'none';
+        document.body.appendChild(ajaxDiv);
 
-    const originalAjax = $.ajax;
-    let ajaxCaptchaWidgetId;
+        const originalAjax = $.ajax;
+        let ajaxCaptchaWidgetId;
 
-    // Render one invisible captcha for ajax requests
-    ajaxCaptchaWidgetId = grecaptcha.render('captcha-ajax', {
-        'sitekey': sitekey,
-        'size': 'invisible'
-    });
+        // Render one invisible captcha for ajax requests
+        ajaxCaptchaWidgetId = grecaptcha.render('captcha-ajax', {
+            'sitekey': sitekey,
+            'size': 'invisible'
+        });
 
-    // Override $.ajax globally
-    $.ajax = function (options) {
-        const isPostOrPut = options.type && allowedMethods.includes(options.type.toLowerCase());
-        const isRecaptchaUrl = options.url && options.url.includes('google.com/recaptcha/api');
-        const disableCaptcha = options.disableCaptcha === true;
+        // Override $.ajax globally
+        $.ajax = function (options) {
+            const isPostOrPut = options.type && allowedMethods.includes(options.type.toLowerCase());
+            const isRecaptchaUrl = options.url && options.url.includes('google.com/recaptcha/api');
+            const disableCaptcha = options.disableCaptcha === true;
 
-        if (isPostOrPut && !isRecaptchaUrl && !disableCaptcha && ajaxCaptchaWidgetId !== undefined) {
-            return new Promise(function (resolve, reject) {
-                grecaptcha.execute(ajaxCaptchaWidgetId).then(function (token) {
-                    // Add token to request
-                    if (typeof options.data === 'string') {
-                        options.data += (options.data ? '&' : '') + `g-recaptcha-response=${encodeURIComponent(token)}`;
-                    } else if (options.data instanceof FormData) {
-                        options.data.append('g-recaptcha-response', token);
-                    } else if (typeof options.data === 'object') {
-                        options.data['g-recaptcha-response'] = token;
-                    } else {
-                        options.data = { 'g-recaptcha-response': token };
-                    }
+            if (isPostOrPut && !isRecaptchaUrl && !disableCaptcha && ajaxCaptchaWidgetId !== undefined) {
+                return new Promise(function (resolve, reject) {
+                    grecaptcha.execute(ajaxCaptchaWidgetId).then(function (token) {
+                        // Add token to request
+                        if (typeof options.data === 'string') {
+                            options.data += (options.data ? '&' : '') + `g-recaptcha-response=${encodeURIComponent(token)}`;
+                        } else if (options.data instanceof FormData) {
+                            options.data.append('g-recaptcha-response', token);
+                        } else if (typeof options.data === 'object') {
+                            options.data['g-recaptcha-response'] = token;
+                        } else {
+                            options.data = { 'g-recaptcha-response': token };
+                        }
 
-                    // Send request
-                    const jqXHR = originalAjax.call($, options);
+                        // Send request
+                        const jqXHR = originalAjax.call($, options);
 
-                    // Reset after completion
-                    jqXHR.always(() => grecaptcha.reset(ajaxCaptchaWidgetId));
+                        // Reset after completion
+                        jqXHR.always(() => grecaptcha.reset(ajaxCaptchaWidgetId));
 
-                    jqXHR.then(resolve).catch(reject);
+                        jqXHR.then(resolve).catch(reject);
+                    });
                 });
-            });
-        } else {
-            return originalAjax.call($, options);
-        }
-    };
+            } else {
+                return originalAjax.call($, options);
+            }
+        };
+    }
 };
