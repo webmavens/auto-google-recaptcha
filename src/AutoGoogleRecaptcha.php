@@ -87,21 +87,27 @@ class AutoGoogleRecaptcha
         $params['onload'] = 'onloadCallback';
         $lang ? $params['hl'] = $lang : null;
 
-        $scriptGoogle = '<script src="'. static::CLIENT_API . '?'. http_build_query($params) .'"></script>';
-        $siteKeyGlobal = '<script> window.RECAPTCHA_SITEKEY = "'. $this->sitekey .'"; </script>';
+        $scriptGoogle = '<script src="'. static::CLIENT_API . '?'. http_build_query($params) .'" async defer></script>';
+        // Inject config in a JSON <script> tag with id
+        $scriptConfig = '<script id="recaptcha-config" type="application/json">'
+            . json_encode([
+                'sitekey' => $this->sitekey,
+                'other_config' => $this->options,
+            ])
+            . '</script>';
 
         // Detect Laravel
         $isLaravel = function_exists('app') && class_exists(\Illuminate\Support\Facades\App::class);
 
         if ($isLaravel) {
             // Use published path in Laravel
-            $scriptPackage = '<script src="' . asset('vendor/auto-google-recaptcha/auto-recaptcha.js') . '"></script>';
+            $scriptPackage = '<script src="' . asset('vendor/auto-google-recaptcha/auto-recaptcha.js') . '" async defer></script>';
         } else {
             // For plain PHP, serve directly (relative path from vendor)
-            $scriptPackage = '<script src="'. static::LOCAL_SCRIPT_PATH .'"></script>';
+            $scriptPackage = '<script src="'. static::LOCAL_SCRIPT_PATH .'" async defer></script>';
         }
 
-        return $scriptGoogle . "\n" . $siteKeyGlobal . "\n" . $scriptPackage;
+        return $scriptGoogle . "\n" . $scriptConfig . "\n" . $scriptPackage;
     }
 
     /**
